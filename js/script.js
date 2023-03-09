@@ -27,8 +27,40 @@ Aggiungere bottoni di start/stop e di inversione del meccanismo di autoplay.
 */
 
 
+// - richiamo dal Dom l'elemento in cui inserirò l'immagine principale
+let carouselElement = document.getElementById('carousel');
+// - richiamo dal Dom l'elemento immagine principale a cui cambierò l'rsc
+let carouselActiveImgElement = document.getElementById('carousel-active-img');
+// - richiamo dal Dom l'elemento in cui inserirò le anteprime delle immagini
+let previewCardsElement = document.getElementById('preview-cards');
+// - richiamo dal Dom l'elemento bottone alto per poterlo modificare
+let startArrowElement = document.getElementById('start-arrow');
+// - richiamo dal Dom l'elemento bottone basso per poterlo modificare
+let endArrowElement = document.getElementById('end-arrow');
 
 
+// modifico lo stile e la posizione del bottone laterale alto per cambiare immagine
+startArrowElement.style.position = 'absolute';
+startArrowElement.style.left = '50%';
+startArrowElement.style.top = '2%';
+startArrowElement.style.fontSize = '1.3em';
+startArrowElement.style.border = '1px solid grey';
+startArrowElement.style.zIndex = '1';
+startArrowElement.style.backgroundColor = 'white';
+startArrowElement.style.borderRadius = '6px'
+
+// modifico lo stile e la posizione del bottone laterale basso per cambiare immagine
+endArrowElement.style.position = 'absolute';
+endArrowElement.style.left = '50%';
+endArrowElement.style.bottom = '2%';
+endArrowElement.style.fontSize = '1.3em';
+endArrowElement.style.border = '1px solid grey';
+endArrowElement.style.zIndex = '1';
+endArrowElement.style.backgroundColor = 'white';
+endArrowElement.style.borderRadius = '6px'
+
+
+// - importo l'array di ogetti fornitoci
 const images = [
     {
         image: 'img/01.webp',
@@ -53,3 +85,103 @@ const images = [
     }
 ];
 
+
+// creo un ciclo per appendere nella parte laterale le 6 anteprime immagini
+for (i = 0; i < images.length; i++) {
+
+    // - creo un'immagine anteprima modificandone anche lo stile
+    let currentImage = document.createElement('img');
+    currentImage.src = images[i].image;
+    currentImage.style.height = 'calc(40vw / 5)';
+    currentImage.style.width = '100%';
+    currentImage.style.objectFit = 'cover';
+    currentImage.classList.add('card-opacity');
+    previewCardsElement.append(currentImage);
+}
+
+// imposto un indice che utilizzerò per manipolare src dell'immagine
+let index = 0;
+
+// creo un elemento in posizione assoluta in cui inserirò il nome dell'immagine
+let nameInside = document.createElement('div');
+nameInside.innerHTML = images[index].title;
+nameInside.style.position = 'absolute';
+nameInside.style.right = '5%';
+nameInside.style.top = '70%';
+nameInside.style.color = 'white';
+nameInside.style.fontWeight = '600';
+nameInside.style.fontSize = '1em';
+nameInside.style.textAlign = 'right';
+carouselElement.append(nameInside);
+
+// creo un elemento in posizione assoluta in cui inserirò il text dell'immagine
+let textInside = document.createElement('div');
+textInside.innerHTML = images[index].text;
+textInside.style.position = 'absolute';
+textInside.style.right = '5%';
+textInside.style.top = '80%';
+textInside.style.width = '90%';
+textInside.style.color = 'white';
+textInside.style.textAlign = 'right';
+carouselElement.append(textInside);
+
+// - seleziono nel Dom la prima anteprima immagine e gli dò la classe per togliere l'opacità
+document.getElementsByClassName('card-opacity')[index].classList.add('selected-card');
+
+
+// - creo un evento click sul bottone alto laterale
+endArrowElement.addEventListener('click', () => {
+
+    // - rimuovo la classe per togliere l'opacità all'immagine di partenza
+    document.getElementsByClassName('card-opacity')[index].classList.remove('selected-card');
+
+    // - aggiungo un unità all'indice
+    index++
+
+    // - condizione di ciclicità infinita
+    if (index == images.length) {
+
+        index = 0;
+    }
+
+    // - aggiungo la classe per togliere l'opacità all'immagine successiva
+    document.getElementsByClassName('card-opacity')[index].classList.add('selected-card');
+
+    // - cambio l'indice dell'immagine principale -> cambio l'immagine principale
+    carouselActiveImgElement.src = images[index].image;
+
+    // - cambio il titolo dell'immagine
+    nameInside.innerHTML = images[index].title;
+
+    // - cambio il testo dell'immagine
+    textInside.innerHTML = images[index].text;
+})
+
+
+// - creo un evento click sul bottone laterale basso
+startArrowElement.addEventListener('click', () => {
+
+    // - rimuovo la classe per togliere l'opacità all'immagine di partenza
+    document.getElementsByClassName('card-opacity')[index].classList.remove('selected-card');
+
+    // - diminuisco un unità all'indice
+    index--
+
+    // - condizione di ciclicità infinita
+    if (index == -1) {
+
+        index = images.length - 1;
+    }
+
+    // - aggiungo la classe per togliere l'opacità all'immagine precedente
+    document.getElementsByClassName('card-opacity')[index].classList.add('selected-card');
+
+    // - cambio l'indice dell'immagine principale -> cambio l'immagine principale
+    carouselActiveImgElement.src = images[index].image;
+
+    // - cambio il titolo dell'immagine
+    nameInside.innerHTML = images[index].title;
+
+    // - cambio il testo dell'immagine
+    textInside.innerHTML = images[index].text;
+})
