@@ -208,3 +208,114 @@ startArrowElement.addEventListener('click', () => {
     // - cambio il testo dell'immagine
     textInside.innerHTML = images[index].text;
 })
+
+
+
+// BONUS 2 / 3
+
+let playElement = document.getElementById('play');
+let rewindElement = document.getElementById('rewind');
+let stopElement = document.getElementById('stop');
+
+
+
+// BONUS 2 -------------------------------
+// - creo una timing function per scorrere in automatico le immagini ogni 3 secondi
+// setInterval(scrollImage, 2000);
+
+// setInterval(scrollImage, 2000);
+
+// setInterval(rewindImage, 3000);
+
+// clearInterval(intervalPlay);
+
+// clearInterval(intervalRewind);
+
+
+// BONUS 3 --------------------------------
+
+let intervalPlay;
+let intervalRewind;
+
+playElement.addEventListener('click', () => {
+    
+    let intervalPlay = setInterval(scrollImage, 2000);
+
+    clearInterval(intervalRewind);
+
+
+});
+
+rewindElement.addEventListener('click', () => {
+
+    let intervalRewind = setInterval(rewindImage, 3000);
+    
+    clearInterval(intervalPlay);
+
+})
+
+stopElement.addEventListener('click', () => {
+
+    // - non riesco ad arrestare le timing function all'interno dell'evento
+    clearInterval(intervalPlay);
+
+})
+
+
+// - creo una funzione in cui inserisco gli stessi comandi che avvengono quando clicco il bottono laterale basso
+function scrollImage() {
+
+    // - rimuovo la classe per togliere l'opacità all'immagine di partenza
+    document.getElementsByClassName('card-opacity')[index].classList.remove('selected-card');
+
+    // - aggiungo un unità all'indice
+    index++
+
+    // - condizione di ciclicità infinita
+    if (index == images.length) {
+
+        index = 0;
+    }
+
+    // - aggiungo la classe per togliere l'opacità all'immagine successiva
+    document.getElementsByClassName('card-opacity')[index].classList.add('selected-card');
+
+    // - cambio l'indice dell'immagine principale -> cambio l'immagine principale
+    carouselActiveImgElement.src = images[index].image;
+
+    // - cambio il titolo dell'immagine
+    nameInside.innerHTML = images[index].title;
+
+    // - cambio il testo dell'immagine
+    textInside.innerHTML = images[index].text;
+
+}
+
+
+// - creo una funzione in cui inserisco gli stessi comandi che avvengono quando clicco il bottono laterale alto
+function rewindImage() {
+
+    // - rimuovo la classe per togliere l'opacità all'immagine di partenza
+    document.getElementsByClassName('card-opacity')[index].classList.remove('selected-card');
+
+    // - diminuisco un unità all'indice
+    index--
+
+    // - condizione di ciclicità infinita
+    if (index == -1) {
+
+        index = images.length - 1;
+    }
+
+    // - aggiungo la classe per togliere l'opacità all'immagine precedente
+    document.getElementsByClassName('card-opacity')[index].classList.add('selected-card');
+
+    // - cambio l'indice dell'immagine principale -> cambio l'immagine principale
+    carouselActiveImgElement.src = images[index].image;
+
+    // - cambio il titolo dell'immagine
+    nameInside.innerHTML = images[index].title;
+
+    // - cambio il testo dell'immagine
+    textInside.innerHTML = images[index].text;
+}

@@ -36,6 +36,17 @@ img {
 }
 
 
+/* BONUS 2 & 3 */
+#container-player-buttons {
+    padding-top: 30px;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+}
+
+
+
 /* classi aggiunte tramite JS */
 
 .card-opacity {
