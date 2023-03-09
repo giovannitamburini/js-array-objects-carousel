@@ -39,6 +39,7 @@ let startArrowElement = document.getElementById('start-arrow');
 let endArrowElement = document.getElementById('end-arrow');
 
 
+
 // modifico lo stile e la posizione del bottone laterale alto per cambiare immagine
 startArrowElement.style.position = 'absolute';
 startArrowElement.style.left = '50%';
@@ -86,20 +87,6 @@ const images = [
 ];
 
 
-// creo un ciclo per appendere nella parte laterale le 6 anteprime immagini
-for (i = 0; i < images.length; i++) {
-
-    // - creo un'immagine anteprima modificandone anche lo stile
-    let currentImage = document.createElement('img');
-    currentImage.src = images[i].image;
-    currentImage.style.height = 'calc(40vw / 5)';
-    currentImage.style.width = '100%';
-    currentImage.style.objectFit = 'cover';
-    currentImage.classList.add('card-opacity');
-    previewCardsElement.append(currentImage);
-}
-
-// imposto un indice che utilizzerò per manipolare src dell'immagine
 let index = 0;
 
 // creo un elemento in posizione assoluta in cui inserirò il nome dell'immagine
@@ -124,6 +111,42 @@ textInside.style.width = '90%';
 textInside.style.color = 'white';
 textInside.style.textAlign = 'right';
 carouselElement.append(textInside);
+
+// creo un ciclo per appendere nella parte laterale le 6 anteprime immagini
+for (i = 0; i < images.length; i++) {
+
+    // - creo un'immagine anteprima modificandone anche lo stile
+    let currentImage = document.createElement('img');
+    currentImage.src = images[i].image;
+    currentImage.style.height = 'calc(40vw / 5)';
+    currentImage.style.width = '100%';
+    currentImage.style.objectFit = 'cover';
+    currentImage.classList.add('card-opacity');
+    previewCardsElement.append(currentImage);
+
+    // - aggiungo un evento click sull'immagine anteprima creata
+    currentImage.addEventListener('click', () => {
+
+        // - creo un ciclo per controllare ed eliminare la classe che rimuove l'opacità
+        for ( i = 0; i < images.length; i++) {
+            
+            // - imposto una condizione che controlla se è presente la classe da eliminare
+            if (document.querySelectorAll('#preview-cards img')[i].classList.contains('selected-card')) {
+
+                // - elimino la classe che toglie l'opacità
+                document.querySelectorAll('#preview-cards img')[i].classList.remove('selected-card')
+            };
+        }
+        
+        // - aggiungo la classe per togliere l'opacità dall'immagine cliccata
+        currentImage.classList.add('selected-card');
+
+        // - cambio l'indice dell'immagine principale -> cambio l'immagine principale
+        carouselActiveImgElement.src = currentImage.src;
+
+    })
+}
+
 
 // - seleziono nel Dom la prima anteprima immagine e gli dò la classe per togliere l'opacità
 document.getElementsByClassName('card-opacity')[index].classList.add('selected-card');
