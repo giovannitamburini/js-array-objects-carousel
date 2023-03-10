@@ -242,28 +242,37 @@ let stopElement = document.getElementById('stop');
 // });
 
 //2) metodo 2------
+
+// creo un evento sul bottone play
 playElement.onclick = bonusPlay;
 
+// creo una funzione in cui inserisco la timing function
 function bonusPlay(){
-    
+
     intervalPlay = setInterval(scrollImage, 2000);
 
 }
 
+// creo un evento sul bottone rewind
 rewindElement.onclick = bonusRewind
 
+// creo una funzione in cui inserisco la timing function
 function bonusRewind () {
 
     intervalRewind = setInterval(rewindImage, 3000);
 
 }
 
+
+// creo un evento click sul bottone stop
 stopElement.onclick = bonusStop
 
 function bonusStop () {
 
+    // richiamo la funzione per poterla fermare
     clearInterval(intervalRewind);
     
+    // richiamo la funzione per poterla fermare
     clearInterval(intervalPlay);
     
 }
