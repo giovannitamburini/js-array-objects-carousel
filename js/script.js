@@ -213,6 +213,7 @@ startArrowElement.addEventListener('click', () => {
 
 // BONUS 2 / 3
 
+// richiamo i 3 bottoni a cui aggancerò le timing function
 let playElement = document.getElementById('play');
 let rewindElement = document.getElementById('rewind');
 let stopElement = document.getElementById('stop');
@@ -221,7 +222,6 @@ let stopElement = document.getElementById('stop');
 
 // BONUS 2 -------------------------------
 // - creo una timing function per scorrere in automatico le immagini ogni 3 secondi
-// setInterval(scrollImage, 2000);
 
 // setInterval(scrollImage, 2000);
 
@@ -234,32 +234,42 @@ let stopElement = document.getElementById('stop');
 
 // BONUS 3 --------------------------------
 
-let intervalPlay;
-let intervalRewind;
+//1) metodo 1------
+// playElement.addEventListener('click', () => {
 
-playElement.addEventListener('click', () => {
+    //setInterval(scrollImage, 2000);
     
-    let intervalPlay = setInterval(scrollImage, 2000);
+// });
+
+//2) metodo 2------
+playElement.onclick = bonusPlay;
+
+function bonusPlay(){
+    
+    intervalPlay = setInterval(scrollImage, 2000);
+
+}
+
+rewindElement.onclick = bonusRewind
+
+function bonusRewind () {
+
+    intervalRewind = setInterval(rewindImage, 3000);
+
+}
+
+stopElement.onclick = bonusStop
+
+function bonusStop () {
 
     clearInterval(intervalRewind);
-
-
-});
-
-rewindElement.addEventListener('click', () => {
-
-    let intervalRewind = setInterval(rewindImage, 3000);
     
     clearInterval(intervalPlay);
+    
+}
 
-})
 
-stopElement.addEventListener('click', () => {
 
-    // - non riesco ad arrestare le timing function all'interno dell'evento
-    clearInterval(intervalPlay);
-
-})
 
 
 // - creo una funzione in cui inserisco gli stessi comandi che avvengono quando clicco il bottono laterale basso
